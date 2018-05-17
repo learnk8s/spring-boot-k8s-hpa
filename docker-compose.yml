@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+   web:
+     build: .
+     environment:
+       REDIS_URL: redis://redis:6379
+     depends_on:
+       - redis
+     ports:
+       - "8080:8080"
+
+   redis:
+     image: redis
