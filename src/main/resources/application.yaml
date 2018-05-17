@@ -1,5 +1,5 @@
 redisUrl: ${REDIS_URL:redis://localhost:6379}
 mainQueueName: ${MAIN_QUEUE:mainQueue}
-workerQueueName: ${WORKER_QUEUE:worker1}
+workerQueueName: ${HOSTNAME:worker1}
 server:
   address: 0.0.0.0
