@@ -2,12 +2,12 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ticketmaster
+  name: spring-boot-hpa
 spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: ticketmaster
+    name: spring-boot-hpa
   minReplicas: 2
   maxReplicas: 10
   metrics:

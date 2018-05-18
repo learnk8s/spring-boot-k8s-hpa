@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.util.List;
 
@@ -60,6 +61,18 @@ public class QueueServiceImpl implements QueueService {
 			if (jedis != null)
 				jedis.close();
 		}
+		return ret;
+	}
+
+	@Override
+	public boolean isUp() {
+		boolean ret = false;
+		try {
+            Jedis jedis = this.jedisPool.getResource();
+            ret = true;
+		} catch (JedisConnectionException e) {
+            LOGGER.error("Couldn't connect to Redis");
+        }
 		return ret;
 	}
 }

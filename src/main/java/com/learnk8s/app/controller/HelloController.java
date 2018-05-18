@@ -3,6 +3,8 @@ package com.learnk8s.app.controller;
 import com.learnk8s.app.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,5 +37,16 @@ public class HelloController {
         return "# HELP messages Number of messages in the queue\n"
                 + "# TYPE messages gauge\n"
                 + "messages " + totalMessages.toString();
+    }
+
+    @RequestMapping(value="/health")
+    public ResponseEntity health() {
+        HttpStatus status;
+        if (queueService.isUp()) {
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(status);
     }
 }

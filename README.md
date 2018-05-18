@@ -63,3 +63,20 @@ Get the FS usage for all the pods in the `monitoring` namespace:
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/pods/*/fs_usage_bytes" | jq .
 ```
+
+## Package the application
+
+You package the application as a container with:
+
+```bash
+eval $(minikube docker-env)
+docker build -t spring-boot-hpa .
+```
+
+## Deploying the application
+
+Deploy the application in Kubernetes with:
+
+```bash
+kubectl create -f kube/deployment.yaml
+```

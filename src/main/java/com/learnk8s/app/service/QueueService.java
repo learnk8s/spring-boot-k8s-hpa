@@ -7,5 +7,7 @@ public interface QueueService {
     void processJobs(String mainQueueName, String workerQueueName);
 
 	Long pendingJobs(String mainQueueName);
+
+	boolean isUp();
 }
 

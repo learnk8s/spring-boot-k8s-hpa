@@ -2,20 +2,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: ticketmaster
+  name: spring-boot-hpa
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: ticketmaster
+        app: spring-boot-hpa
         version: v1
       annotations:
         prometheus.io/scrape: 'true'
     spec:
       containers:
       - name: web
-        image: ticketmaster
+        image: spring-boot-hpa
         imagePullPolicy: IfNotPresent
         env:
         - name: REDIS_URL
@@ -32,14 +32,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ticketmaster
+  name: spring-boot-hpa
 spec:
   ports:
   - nodePort: 32000
     port: 80
     targetPort: 8080
   selector:
-    app: ticketmaster
+    app: spring-boot-hpa
   type: NodePort
 ---
 apiVersion: extensions/v1beta1
