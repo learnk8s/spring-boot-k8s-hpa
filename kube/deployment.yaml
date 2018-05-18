@@ -21,12 +21,12 @@ spec:
         - name: REDIS_URL
           value: "redis://redis:6379"
         ports:
-          - containerPort: 3000
+          - containerPort: 8080
         livenessProbe:
           initialDelaySeconds: 2
           periodSeconds: 5
           httpGet:
-            path: /actuator/health
+            path: /health
             port: 8080
 ---
 apiVersion: v1
