@@ -114,3 +114,5 @@ hs_err_pid*
 /workspace/
 /ode_modules/
 /.apt_generated/
+
+monitoring/custom-metrics-api/cm-adapter-serving-certs.yaml

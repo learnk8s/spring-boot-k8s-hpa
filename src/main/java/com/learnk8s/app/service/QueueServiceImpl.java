@@ -16,6 +16,7 @@ import java.util.List;
 public class QueueServiceImpl implements QueueService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueueServiceImpl.class);
+    private long completedJobs = 0;
 
 	@Autowired
 	private JedisPool jedisPool;
@@ -42,6 +43,7 @@ public class QueueServiceImpl implements QueueService {
                 Thread.sleep(5000);
                 LOGGER.info("Completed task " + taskId);
                 jedis.lrem(workerQueueName, -1, taskId);
+                this.completedJobs += 1;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -69,10 +71,17 @@ public class QueueServiceImpl implements QueueService {
 		boolean ret = false;
 		try {
             Jedis jedis = this.jedisPool.getResource();
+            if (jedis != null)
+                jedis.close();
             ret = true;
 		} catch (JedisConnectionException e) {
             LOGGER.error("Couldn't connect to Redis");
         }
 		return ret;
 	}
+
+    @Override
+    public Long completedJobs() {
+        return this.completedJobs;
+    }
 }

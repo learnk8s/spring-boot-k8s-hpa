@@ -9,5 +9,7 @@ public interface QueueService {
 	Long pendingJobs(String mainQueueName);
 
 	boolean isUp();
+
+	Long completedJobs();
 }
 

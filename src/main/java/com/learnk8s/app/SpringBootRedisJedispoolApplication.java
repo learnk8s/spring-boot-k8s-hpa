@@ -26,6 +26,9 @@ public class SpringBootRedisJedispoolApplication implements CommandLineRunner {
     @Value("${workerQueueName}")
     private String workerQueueName;
 
+    @Value("${workerEnabled}")
+    private boolean workerEnabled;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootRedisJedispoolApplication.class, args);
 	}
@@ -33,7 +36,10 @@ public class SpringBootRedisJedispoolApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         LOGGER.info("Using MAIN_QUEUE=" + mainQueueName);
-        LOGGER.info("Using WORKER_QUEUE=" + workerQueueName);
-        queueService.processJobs(mainQueueName, workerQueueName);
+
+        if (workerEnabled) {
+            LOGGER.info("Using WORKER_QUEUE=" + workerQueueName);
+            queueService.processJobs(mainQueueName, workerQueueName);
+        }
     }
 }

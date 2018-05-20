@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout.html">
+<div layout:fragment="content">
+    <div class="store" th:if="${isStoreEnabled}">
+        <h1 class="f1">Lucky Lottery</h1>
+        <div class="bg-near-white ph3 pv1">
+            <p class="sans-serif lh-copy measure">Buy tickets, win the lottery, become a millionaire.</p>
+        </div>
+        <div class="pv4">
+            <form th:action="@{/tickets}" th:object="${ticket}" method="post">
+                <input type="hidden" name="quantity" th:value="1">
+                <button class="f4 link br1 ba bw2 ph3 pv2 mb2 dib near-black b--near-black b hover-bg-near-black hover-white">Buy 1 ticket</button>
+            </form>
+            <form th:action="@{/tickets}" th:object="${ticket}" method="post">
+                <input type="hidden" name="quantity" th:value="10">
+                <button class="f4 link br1 ba bw2 ph3 pv2 mb2 dib near-black b--near-black b hover-bg-near-black hover-white">Buy 10 tickets</button>
+            </form>
+            <form th:action="@{/tickets}" th:object="${ticket}" method="post">
+                <input type="hidden" name="quantity" th:value="100">
+                <button class="f4 link br1 ba bw2 ph3 pv2 mb2 dib near-black b--near-black b hover-bg-near-black hover-white">Buy 100 tickets</button>
+            </form>
+        </div>
+    </div>
+    <div class="worker" th:if="${isWorkerEnabled}">
+        <h2 class="f1">Admin</h2>
+        <div class="bg-near-white ph3 pv1">
+            <p class="sans-serif lh-copy measure">Lottery backend system.</p>
+        </div>
+        <ul class="pl0 list">
+            <li class="mv2"><span class="f6 ttu near-gray">Connected:</span> <span class="b" th:text="${isConnected}"></span></li>
+            <li class="mv2"><span class="f6 ttu">Consuming from queue:</span> <span class="b" th:text="${mainQueue}"></span></li>
+            <li class="mv2"><span class="f6 ttu">Worker name:</span> <span class="b" th:text="${workerName}"></span></li>
+        </ul>
+        <div class="flex items-start">
+            <div class="bg-near-white w5 tc pv3 mr4">
+                <div class="f-headline b" th:text="${pendingJobs}"></div>
+                <p class="f7 ttu b mb1">Pending jobs</p>
+                <p class="f7 ttu mt0">(Main queue)</p>
+            </div>
+            <div class="bg-near-white w5 tc pv3">
+                <div class="f-headline b" th:text="${completedJobs}"></div>
+                <p class="f7 ttu b mb1">Completed jobs</p>
+                <p class="f7 ttu mt0">(Current queue)</p>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -3,3 +3,5 @@ mainQueueName: ${MAIN_QUEUE:mainQueue}
 workerQueueName: ${HOSTNAME:worker1}
 server:
   address: 0.0.0.0
+storeEnabled: ${STORE_ENABLED:true}
+workerEnabled: ${WORKER_ENABLED:true}
