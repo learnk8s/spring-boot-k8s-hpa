@@ -7,7 +7,11 @@ You should have minikube installed.
 You should start minikube with at least 4GB of RAM:
 
 ```bash
-minikube start --memory 4096
+minikube start \
+  --memory 4096 \
+  --extra-config=controller-manager.horizontal-pod-autoscaler-upscale-delay=1m \
+  --extra-config=controller-manager.horizontal-pod-autoscaler-downscale-delay=2m \
+  --extra-config=controller-manager.horizontal-pod-autoscaler-sync-period=10s
 ```
 
 > If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
@@ -15,10 +19,6 @@ minikube start --memory 4096
 You should install `jq` — a lightweight and flexible command-line JSON processor.
 
 You can find more [info about `jq` on the official website](https://github.com/stedolan/jq).
-
-You should install `cfssl` - a command line tool and an HTTP API server for signing, verifying, and bundling TLS certificates.
-
-You can find more [info about `jq` on the official website](https://github.com/cloudflare/cfssl).
 
 ## Installing Custom Metrics Api
 
@@ -58,12 +58,6 @@ Deploy Prometheus v2 in the monitoring namespace:
 
 ```bash
 kubectl create -f ./prometheus
-```
-
-Generate the TLS certificates needed by the Prometheus adapter:
-
-```bash
-make certs
 ```
 
 Deploy the Prometheus custom metrics API adapter:
@@ -140,3 +134,21 @@ You can inspect the event and triggers in the HPA with:
 ```bash
 kubectl get hpa spring-boot-hpa
 ```
+
+## Appendix
+
+Using the secrets checked in the repository to deploy the Prometheus adapter is not recommended.
+
+You should generate your own secrets.
+
+But before you do so, make sure you install `cfssl` - a command line tool and an HTTP API server for signing, verifying, and bundling TLS certificates
+                      
+You can find more [info about `cfssl` on the official website](https://github.com/cloudflare/cfssl).
+
+Once `cfssl` is installed you generate a new Kubernetes secret with:
+
+```bash
+make certs
+```
+
+You should redeploy the Prometheus adapter.

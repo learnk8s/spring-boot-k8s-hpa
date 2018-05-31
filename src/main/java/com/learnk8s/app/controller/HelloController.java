@@ -44,8 +44,8 @@ public class HelloController {
         return "home";
     }
 
-    @PostMapping("/tickets")
-    public String tickets(@ModelAttribute Ticket ticket) {
+    @PostMapping("/submit")
+    public String submit(@ModelAttribute Ticket ticket) {
         for (long i = 0; i < ticket.getQuantity(); i++) {
             String id = UUID.randomUUID().toString();
             queueService.addJob(mainQueueName, id);

@@ -7,8 +7,8 @@ spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: spring-boot-hpa
-  minReplicas: 2
+    name: worker
+  minReplicas: 1
   maxReplicas: 10
   metrics:
   - type: Pods
