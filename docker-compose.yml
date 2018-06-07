@@ -4,11 +4,11 @@ services:
    web:
      build: .
      environment:
-       REDIS_URL: redis://redis:6379
+       REDIS_URL: tcp://localhost:61616
      depends_on:
-       - redis
+       - activemq
      ports:
        - "8080:8080"
 
-   redis:
-     image: redis
+   activemq:
+     image: webcenter/activemq:5.14.3

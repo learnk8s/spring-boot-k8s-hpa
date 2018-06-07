@@ -7,7 +7,7 @@ spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: worker
+    name: backend
   minReplicas: 1
   maxReplicas: 10
   metrics:

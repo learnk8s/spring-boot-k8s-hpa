@@ -5,7 +5,7 @@ activemq:
 queue:
   name: ${QUEUE_NAME:mainQueue}
 worker:
-  name: ${WORKER_NAME:worker1}
+  name: ${HOSTNAME:worker1}
   enabled: ${WORKER_ENABLED:true}
 store:
   enabled: ${STORE_ENABLED:true}
