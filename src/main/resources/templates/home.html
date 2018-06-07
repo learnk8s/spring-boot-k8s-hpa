@@ -29,19 +29,19 @@
         </div>
         <ul class="pl0 list">
             <li class="mv2"><span class="f6 ttu near-gray">Connected:</span> <span class="b" th:text="${isConnected}"></span></li>
-            <li class="mv2"><span class="f6 ttu">Consuming from queue:</span> <span class="b" th:text="${mainQueue}"></span></li>
+            <li class="mv2"><span class="f6 ttu">Consuming from queue:</span> <span class="b" th:text="${queueName}"></span></li>
             <li class="mv2"><span class="f6 ttu">Worker name:</span> <span class="b" th:text="${workerName}"></span></li>
         </ul>
         <div class="flex items-start">
             <div class="bg-near-white w5 tc pv3 mr4">
                 <div class="f-headline b" th:text="${pendingJobs}"></div>
                 <p class="f7 ttu b mb1">Pending jobs</p>
-                <p class="f7 ttu mt0">(Main queue)</p>
+                <p class="f7 ttu mt0">(from queue)</p>
             </div>
             <div class="bg-near-white w5 tc pv3">
                 <div class="f-headline b" th:text="${completedJobs}"></div>
                 <p class="f7 ttu b mb1">Completed jobs</p>
-                <p class="f7 ttu mt0">(Current queue)</p>
+                <p class="f7 ttu mt0">&nbsp;</p>
             </div>
         </div>
     </div>

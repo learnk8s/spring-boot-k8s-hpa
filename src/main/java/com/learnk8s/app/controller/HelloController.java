@@ -1,7 +1,7 @@
 package com.learnk8s.app.controller;
 
 import com.learnk8s.app.model.Ticket;
-import com.learnk8s.app.service.QueueService;
+import com.learnk8s.app.queue.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,27 +18,27 @@ public class HelloController {
     @Autowired
     private QueueService queueService;
 
-    @Value("${mainQueueName}")
-    private String mainQueueName;
+    @Value("${queue.name}")
+    private String queueName;
 
-    @Value("${workerQueueName}")
-    private String workerQueueName;
+    @Value("${worker.name}")
+    private String workerName;
 
-    @Value("${storeEnabled}")
+    @Value("${store.enabled}")
     private boolean storeEnabled;
 
-    @Value("${workerEnabled}")
+    @Value("${worker.enabled}")
     private boolean workerEnabled;
 
     @GetMapping("/")
     public String home(Model model) {
-        Long pendingMessages = queueService.pendingJobs(mainQueueName);
+        int pendingMessages = queueService.pendingJobs(queueName);
         model.addAttribute("ticket", new Ticket());
         model.addAttribute("pendingJobs", pendingMessages);
         model.addAttribute("completedJobs", queueService.completedJobs());
         model.addAttribute("isConnected", queueService.isUp() ? "yes" : "no");
-        model.addAttribute("mainQueue", this.mainQueueName);
-        model.addAttribute("workerName", this.workerQueueName);
+        model.addAttribute("queueName", this.queueName);
+        model.addAttribute("workerName", this.workerName);
         model.addAttribute("isStoreEnabled", this.storeEnabled);
         model.addAttribute("isWorkerEnabled", this.workerEnabled);
         return "home";
@@ -48,7 +48,7 @@ public class HelloController {
     public String submit(@ModelAttribute Ticket ticket) {
         for (long i = 0; i < ticket.getQuantity(); i++) {
             String id = UUID.randomUUID().toString();
-            queueService.addJob(mainQueueName, id);
+            queueService.send(queueName, id);
         }
         return "success";
     }
@@ -56,10 +56,10 @@ public class HelloController {
     @ResponseBody
     @RequestMapping(value="/metrics", produces="text/plain")
     public String metrics() {
-        Long totalMessages = queueService.pendingJobs(mainQueueName);
-        return "# HELP messages Number of messages in the queue\n"
+        int totalMessages = queueService.pendingJobs(queueName);
+        return "# HELP messages Number of messages in the queueService\n"
                 + "# TYPE messages gauge\n"
-                + "messages " + totalMessages.toString();
+                + "messages " + totalMessages;
     }
 
     @RequestMapping(value="/health")
@@ -72,4 +72,6 @@ public class HelloController {
         }
         return new ResponseEntity<>(status);
     }
+
+
 }

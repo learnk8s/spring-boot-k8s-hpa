@@ -1,7 +1,11 @@
-redisUrl: ${REDIS_URL:redis://localhost:6379}
-mainQueueName: ${MAIN_QUEUE:mainQueue}
-workerQueueName: ${HOSTNAME:worker1}
 server:
   address: 0.0.0.0
-storeEnabled: ${STORE_ENABLED:true}
-workerEnabled: ${WORKER_ENABLED:true}
+activemq:
+  brokerUrl: ${ACTIVEMQ_BROKER_URL:vm://localhost:61616}
+queue:
+  name: ${QUEUE_NAME:mainQueue}
+worker:
+  name: ${WORKER_NAME:worker1}
+  enabled: ${WORKER_ENABLED:true}
+store:
+  enabled: ${STORE_ENABLED:true}
