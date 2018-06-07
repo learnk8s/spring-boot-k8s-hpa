@@ -57,7 +57,7 @@ spec:
   template:
     metadata:
       labels:
-        app: redis
+        app: queue
     spec:
       containers:
       - name: web
@@ -65,6 +65,9 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 61616
+        resources:
+          limits:
+            memory: 512Mi
 ---
 apiVersion: v1
 kind: Service
@@ -75,7 +78,7 @@ spec:
   - port: 61616
     targetPort: 61616
   selector:
-    app: redis
+    app: queue
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
