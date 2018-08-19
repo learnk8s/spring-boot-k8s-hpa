@@ -5,6 +5,7 @@ import org.apache.activemq.command.ActiveMQTextMessage;
 import org.apache.activemq.junit.EmbeddedActiveMQBroker;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,18 @@ public class SpringBootApplicationTests {
 
     private static final String QUEUE_NAME = "testQueue";
 
-    @ClassRule
-	public static EmbeddedActiveMQBroker broker = new EmbeddedActiveMQBroker();
+    @Rule
+	public EmbeddedActiveMQBroker broker = new EmbeddedActiveMQBroker() {
+		@Override
+		protected void configure() {
+			try {
+				this.getBrokerService().addConnector("tcp://localhost:61616");
+
+			} catch (Exception e) {
+				// noop test should fail
+			}
+		}
+	};
 
 	@Autowired
 	private QueueService queueService;
