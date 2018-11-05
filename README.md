@@ -95,11 +95,11 @@ Deploy the application in Kubernetes with:
 kubectl create -f kube/deployment.yaml
 ```
 
-You can visit the application at http://<minkube ip>:32000
+You can visit the application at http://minkube_ip:32000
 
-You can send messages to the queue by visiting http://<minkube ip>:32000/submit
+You can send messages to the queue by visiting http://minkube_ip:32000/submit
 
-You should be able to see the number of pending messages from http://<minkube ip>:32000/metrics and from the custom metrics endpoint:
+You should be able to see the number of pending messages from http://minkube_ip:32000/metrics and from the custom metrics endpoint:
 
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/messages" | jq .
@@ -142,7 +142,7 @@ Using the secrets checked in the repository to deploy the Prometheus adapter is 
 You should generate your own secrets.
 
 But before you do so, make sure you install `cfssl` - a command line tool and an HTTP API server for signing, verifying, and bundling TLS certificates
-                      
+
 You can find more [info about `cfssl` on the official website](https://github.com/cloudflare/cfssl).
 
 Once `cfssl` is installed you generate a new Kubernetes secret with:
