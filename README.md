@@ -84,6 +84,11 @@ You package the application as a container with:
 
 ```bash
 eval $(minikube docker-env)
+```
+
+Make sure you're in the root folder with the `Dockerfile` and build the image:
+
+```bash
 docker build -t spring-boot-hpa .
 ```
 
@@ -119,7 +124,7 @@ You can send more traffic to the application with:
 while true; do sleep 0.5; curl -s http://<minikube ip>:32000/submit; done
 ```
 
-When the application can't cope with the number of icoming messages, the autoscaler increases the number of pods only every 3 minutes.
+When the application can't cope with the number of incoming messages, the autoscaler increases the number of pods only every 3 minutes.
 
 You may need to wait three minutes before you can see more pods joining the deployment with:
 
