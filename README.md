@@ -112,7 +112,7 @@ kubectl create -f kube/hpa.yaml
 You can send more traffic to the application with:
 
 ```bash
-while true; do curl -d "quantity=2" -X POST http://minkube_ip:32000/submit ; sleep 2; done
+while true; do curl -d "quantity=1" -X POST http://minkube_ip:32000/submit ; sleep 4; done
 ```
 
 When the application can't cope with the number of incoming messages, the autoscaler increases the number of pods in 3 minute intervals.
