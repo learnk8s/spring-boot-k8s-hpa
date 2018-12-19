@@ -93,7 +93,7 @@ You can visit the application at http://minkube_ip:32000
 
 > (Find the minikube ip address via `minikube ip`)
 
-You can send messages to the queue by visiting http://minkube_ip:32000/submit
+You can post messages to the queue by via http://minkube_ip:32000/submit?quantity=2
 
 You should be able to see the number of pending messages from http://minkube_ip:32000/metrics and from the custom metrics endpoint:
 
@@ -115,7 +115,7 @@ You can send more traffic to the application with:
 while true; do curl -d "quantity=2" -X POST http://minkube_ip:32000/submit ; sleep 2; done
 ```
 
-When the application can't cope with the number of incoming messages, the autoscaler increases the number of pods only every 3 minutes.
+When the application can't cope with the number of incoming messages, the autoscaler increases the number of pods in 3 minute intervals.
 
 You may need to wait three minutes before you can see more pods joining the deployment with:
 
