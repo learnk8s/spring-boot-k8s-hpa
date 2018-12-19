@@ -22,16 +22,10 @@ You can find more [info about `jq` on the official website](https://github.com/s
 
 ## Installing Custom Metrics Api
 
-Make sure you are in the `monitoring` folder:
-
-```bash
-cd monitoring
-```
-
 Deploy the Metrics Server in the `kube-system` namespace:
 
 ```bash
-kubectl create -f ./metrics-server
+kubectl create -f monitoring/metrics-server
 ```
 
 After one minute the metric-server starts reporting CPU and memory usage for nodes and pods.
@@ -51,19 +45,19 @@ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 Create the monitoring namespace:
 
 ```bash
-kubectl create -f ./namespaces.yaml
+kubectl create -f monitoring/namespaces.yaml
 ```
 
 Deploy Prometheus v2 in the monitoring namespace:
 
 ```bash
-kubectl create -f ./prometheus
+kubectl create -f monitoring/prometheus
 ```
 
 Deploy the Prometheus custom metrics API adapter:
 
 ```bash
-kubectl create -f ./custom-metrics-api
+kubectl create -f monitoring/custom-metrics-api
 ```
 
 List the custom metrics provided by Prometheus:
@@ -92,12 +86,14 @@ docker build -t spring-boot-hpa .
 Deploy the application in Kubernetes with:
 
 ```bash
-kubectl create -f kube/deployment.yaml
+kubectl create -f kube/deployment
 ```
 
 You can visit the application at http://minkube_ip:32000
 
-You can send messages to the queue by visiting http://minkube_ip:32000/submit
+> (Find the minikube ip address via `minikube ip`)
+
+You can post messages to the queue by via http://minkube_ip:32000/submit?quantity=2
 
 You should be able to see the number of pending messages from http://minkube_ip:32000/metrics and from the custom metrics endpoint:
 
@@ -116,10 +112,10 @@ kubectl create -f kube/hpa.yaml
 You can send more traffic to the application with:
 
 ```bash
-while true; do sleep 0.5; curl -s http://<minikube ip>:32000/submit; done
+while true; do curl -d "quantity=1" -X POST http://minkube_ip:32000/submit ; sleep 4; done
 ```
 
-When the application can't cope with the number of icoming messages, the autoscaler increases the number of pods only every 3 minutes.
+When the application can't cope with the number of incoming messages, the autoscaler increases the number of pods in 3 minute intervals.
 
 You may need to wait three minutes before you can see more pods joining the deployment with:
 
