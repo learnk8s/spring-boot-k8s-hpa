@@ -5,7 +5,7 @@ metadata:
   name: spring-boot-hpa
 spec:
   scaleTargetRef:
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
     name: backend
   minReplicas: 1
