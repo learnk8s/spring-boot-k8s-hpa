@@ -15,6 +15,7 @@ rules:
   - watch
 - apiGroups:
   - "extensions"
+  - "apps"
   resources:
   - deployments
   verbs:
