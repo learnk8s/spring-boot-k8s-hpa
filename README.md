@@ -66,12 +66,6 @@ List the custom metrics provided by Prometheus:
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
 ```
 
-Get the FS usage for all the pods in the `monitoring` namespace:
-
-```bash
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/pods/*/fs_usage_bytes" | jq .
-```
-
 ## Package the application
 
 You package the application as a container with:
@@ -131,20 +125,17 @@ You can inspect the event and triggers in the HPA with:
 kubectl get hpa spring-boot-hpa
 ```
 
-## Appendix
+## Notes
 
-Using the secrets checked in the repository to deploy the Prometheus adapter is not recommended.
+The configuration for metrics and metrics server is configured to run on minikube only.
 
-You should generate your own secrets.
+**You won't be able to run the same YAML files for metrics and custom metrics server on your cluster or EKS, GKE, AKS, etc.**
 
-But before you do so, make sure you install `cfssl` - a command line tool and an HTTP API server for signing, verifying, and bundling TLS certificates
+Also, there are secrets checked in the repository to deploy the Prometheus adapter.
 
-You can find more [info about `cfssl` on the official website](https://github.com/cloudflare/cfssl).
+**In production, you should generate your own secrets and (possibly) not check them into version control.**
 
-Once `cfssl` is installed you generate a new Kubernetes secret with:
+If you wish to run metrics and custom metrics server in production, you should check out the following resources:
 
-```bash
-make certs
-```
-
-You should redeploy the Prometheus adapter.
+- [Metrics server](https://github.com/kubernetes-sigs/metrics-server)
+- [How to install Prometheus and the Promtheus Adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter/blob/master/docs/walkthrough.md)
