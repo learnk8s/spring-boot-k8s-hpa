@@ -4,7 +4,7 @@ services:
    web:
      build: .
      environment:
-       REDIS_URL: tcp://localhost:61616
+       ACTIVEMQ_BROKER_URL: tcp://activemq:61616
      depends_on:
        - activemq
      ports:
