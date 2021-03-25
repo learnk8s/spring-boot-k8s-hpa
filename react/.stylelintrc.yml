@@ -1,0 +1,20 @@
+{
+  "processors": ["stylelint-processor-styled-components"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-property-sort-order-smacss",
+    "stylelint-config-styled-components"
+  ],
+  "rules": {
+    "selector-class-pattern": "^(?:(?:a|m|o|t)__)?[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?(?:\\[.+\\])?$",
+    "no-missing-end-of-source-newline": null,
+    "color-hex-length": "short",
+    "at-rule-no-unknown": [true, {
+      "ignoreAtRules": ["function", "if", "each", "include", "mixin", "return"]
+    }],
+    "value-keyword-case": "lower",
+    "property-no-vendor-prefix": true,
+    "font-weight-notation": "numeric",
+    "selector-attribute-quotes": "always"
+  }
+}
